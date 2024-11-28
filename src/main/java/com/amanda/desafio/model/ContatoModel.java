@@ -2,8 +2,12 @@ package com.amanda.desafio.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+@Getter //Automatiza a criação de getters e setters.
+@Setter//Automatiza a criação de getters e setters.
 @Entity
 public class ContatoModel {
 
@@ -25,27 +29,4 @@ public class ContatoModel {
         this.texto = texto;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
 }

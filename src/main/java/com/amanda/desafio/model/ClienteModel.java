@@ -2,10 +2,14 @@ package com.amanda.desafio.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
+@Setter //Automatiza a criação de getters e setters.
+@Getter
 @Entity
 public class ClienteModel {
 
@@ -23,30 +27,7 @@ public class ClienteModel {
 
     public ClienteModel(String nome, LocalDateTime dataCadastro) {
         this.nome = nome;
-        this.dataCadastro = dataCadastro;
+        this.dataCadastro = LocalDateTime.now(); // A data é gerada automaticamente pelo sistema
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
 }
