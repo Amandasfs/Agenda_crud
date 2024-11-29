@@ -50,7 +50,7 @@ public class ClienteService {
         try{
             repos.deleteById(id);
         }catch (org.springframework.dao.DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("Esse contato não pode ser deletado, pois possui clientes cadastrados");
+            throw new DataIntegrityViolationException("Esse cliente não pode ser deletado, pois possui contatos cadastrados");
         }
     }
 
