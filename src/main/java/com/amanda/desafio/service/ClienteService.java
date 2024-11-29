@@ -1,57 +1,61 @@
 package com.amanda.desafio.service;
 
+import com.amanda.desafio.dto.ClienteDTO;
+import com.amanda.desafio.mapper.ClienteMapper;
 import com.amanda.desafio.model.ClienteModel;
-import com.amanda.desafio.model.ContatoModel;
 import com.amanda.desafio.repository.ClienteRepository;
-import com.amanda.desafio.service.exceptions.DataIntegrityViolationException;
-import com.amanda.desafio.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
-    @Autowired
-    private ClienteRepository repos; //variável repos chama repositório.
 
     @Autowired
-    private ContatoService contato; //variável contato chama classes de contato service.
+    private ClienteRepository repository;//chama o repositorio do cliente.
 
-    //metodo de buscar cliente por id
-    public ClienteModel findById(Integer id) {
-        //usa o repositorio para encontrar o cliente, e retorna opcional.
-        Optional<ClienteModel> obj = repos.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Cliente não encontrado! o id: " + id + ", Tipo: " + ClienteModel.class.getName())); // se não encontrar o cliente, a classe retorna mensagem de erro.
+    @Autowired
+    private ClienteMapper mapper;//chama mapper.
+
+    //cadastrar cliente
+    public ClienteDTO createCliente(ClienteDTO dto) {
+        ClienteModel model = mapper.toEntity(dto); //converte dto para model
+        model = repository.save(model); //salva a entidade model no banco por meio do repositorio
+        return mapper.toDTO(model); // converte de model para dto, depois de salvo.
     }
 
-    //metodo para atualiza cliente.
-    public ClienteModel update(Integer id, ClienteModel obj){
-        ClienteModel newObj = findById(id);
-        updateData(newObj, obj); //chama metodo de alteração
-        return repos.save(newObj);
+    //lista clientes
+    public List<ClienteDTO> getAllClientes(){
+        List<ClienteModel> clientes = repository.findAll(); //chama dados dos clientes
+        return clientes.stream()//usa stream para converter a lista de model para dto
+                .map(mapper::toDTO) //converte cada objeto da lista separadamente
+                .collect(Collectors.toList());//usa os resultados da conversão para criar uma nova lista.
     }
 
-    //metodo de altera nome.
-    private void updateData(ClienteModel newObj, ClienteModel obj){
-        newObj.setNome(obj.getNome()); //altera somente o nome
+    //lista por id
+    public ClienteDTO getClienteById(Integer id){
+        ClienteModel cliente = repository.findById(id).orElseThrow(()-> new RuntimeException("Cliente não encontrado"));
+        return mapper.toDTO(cliente);
     }
 
-    //metodo de cadastro.
-    public ClienteModel create(ClienteModel obj){
-        obj.setId(null);//responsavel por garantir que seja um novo cleinte
-        return repos.save(obj);//salva o cliente diretamente
-    }
-    //metodo para deletar cliente
-    public void delete(Integer id){
-        findById(id);
-        try{
-            repos.deleteById(id);
-        }catch (org.springframework.dao.DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("Esse cliente não pode ser deletado, pois possui contatos cadastrados");
+    //atualiza id
+    public ClienteDTO upadateCliente(Integer id, ClienteDTO dto){
+        if(!repository.existsById(id)){
+            throw new RuntimeException("Cliente não encontrado!"); //essa função verifica se id existe no banco, se não aparece a mensagem de erro
         }
+        ClienteModel model = mapper.toEntity(dto); //converte dto para model
+        model.setId(id); //chama cliente referente ao id buscado
+        model = repository.save(model); //salva no banco
+        return mapper.toDTO(model); //converte de model para dto novamente.
     }
 
+    //deleta cliente e contatos.
+    public void deleteCliente(Integer id){
+        if (!repository.existsById(id)){
+            throw new RuntimeException("Cliente não encontrado!"); //verifica se cliente existe, se o id não estiver no repositorio ele aparece a mensagem de erro.
+        }
+        repository.deleteById(id); //deleta cliente e contatos.
+    }
 }

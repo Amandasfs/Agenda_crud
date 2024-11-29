@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List; //retorna lista.
 
-@Repository //marcação da interface de repositorio.
+@Repository //marcação da ‘interface’ de repositorio.
 public interface ContatoRepository extends JpaRepository<ContatoModel, Integer> {
 
     @Query("SELECT obj FROM Contato obj Where obj.cliente.id = :id_cli ORDER BY nome")//busca personalizada para encontrar contatos pelo id do cliente, ordenado pelo nome.

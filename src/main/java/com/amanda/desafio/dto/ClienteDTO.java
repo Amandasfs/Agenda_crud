@@ -1,5 +1,6 @@
 package com.amanda.desafio.dto;
 
+import com.amanda.desafio.model.ClienteModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
