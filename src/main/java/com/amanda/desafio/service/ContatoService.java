@@ -36,7 +36,7 @@ public class ContatoService {
 
     //busca contatos
     public List<ContatoDTO> getContatosByClienteId(Integer clienteId){
-        List<ContatoModel> contatos = repository.findAllByCLiente(clienteId); //chama dados dos contatos
+        List<ContatoModel> contatos = repository.findAllByClienteId(clienteId); //chama dados dos contatos
         return contatos.stream()//usa stream para converter a lista de model para dto
                 .map(mapper::toDTO)//converte cada objeto da lista separadamente
                 .collect(Collectors.toList());//usa os resultados da conversão para criar uma nova lista.

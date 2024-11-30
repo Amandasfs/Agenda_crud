@@ -2,7 +2,9 @@ package com.amanda.desafio.mapper;
 
 import com.amanda.desafio.dto.ContatoDTO;
 import com.amanda.desafio.model.ContatoModel;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ContatoMapper {
 
     // metodo para converter model para dto
