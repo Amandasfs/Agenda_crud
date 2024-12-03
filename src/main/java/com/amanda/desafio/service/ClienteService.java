@@ -4,6 +4,7 @@ import com.amanda.desafio.dto.ClienteDTO;
 import com.amanda.desafio.mapper.ClienteMapper;
 import com.amanda.desafio.model.ClienteModel;
 import com.amanda.desafio.repository.ClienteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,11 @@ public class ClienteService {
     private ClienteMapper mapper;//chama mapper.
 
     //cadastrar cliente
+    @Transactional
     public ClienteDTO createCliente(ClienteDTO dto) {
-        ClienteModel model = mapper.toEntity(dto); //converte dto para model
-        model = repository.save(model); //salva a entidade model no banco por meio do repositorio
-        return mapper.toDTO(model); // converte de model para dto, depois de salvo.
+        ClienteModel model = mapper.toEntity(dto);
+        model = repository.save(model);
+        return mapper.toDTO(model);
     }
 
     //lista clientes

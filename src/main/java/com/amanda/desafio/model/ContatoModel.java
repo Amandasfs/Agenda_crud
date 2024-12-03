@@ -11,7 +11,10 @@ import org.hibernate.validator.constraints.Length;
 @Setter
 @NoArgsConstructor//construtor padrão.
 @Entity
+@Table(name = "contato")
 public class ContatoModel {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +25,7 @@ public class ContatoModel {
     @Column(nullable = false) //não pode ser vazio
     private String tipo;
 
-    @Length(min = 100, max = 350, message = "O texto deve ter entre 100 e 350 caracteres.")
+    @Length(min = 3, max = 200, message = "O texto deve ter entre 3 e 200 caracteres.")
     @Column(nullable = true) //pode ser vazio, podendo ser adicionado depois
     private String texto;
 
