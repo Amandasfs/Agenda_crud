@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/spring%20boot-8A2BE2?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot">
 </p>
 
-<p>Desafio, criar uma API RESTFUL, capaz de criar, alterar, deletar, listar e pesquisar Clientes e Contatos/p>
+<p>Desafio, criar uma API RESTFUL, capaz de criar, alterar, deletar, listar e pesquisar Clientes e Contatos</p>
 <br>
 <h2>Foram usados no Projeto:</h2><br>
 <p> :blue_heart: DTO</p><br>
